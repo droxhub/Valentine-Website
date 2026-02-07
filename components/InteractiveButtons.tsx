@@ -10,8 +10,8 @@ export default function InteractiveButtons({
   onAccept,
 }: InteractiveButtonsProps) {
   const [noCount, setNoCount] = useState(0);
-  const [yesSize, setYesSize] = useState(120);
-  const [noSize, setNoSize] = useState(120);
+  const [yesScale, setYesScale] = useState(1);
+  const [noScale, setNoScale] = useState(1);
   const [questionText, setQuestionText] = useState("Will you be my Valentine?");
   const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
 
@@ -34,18 +34,29 @@ export default function InteractiveButtons({
       setQuestionText(questions[newCount]);
     }
 
-    // Decrease No button size exponentially
-    const newNoSize = Math.max(noSize * 0.75, 20);
-    setNoSize(newNoSize);
+    // Scale buttons
+    setNoScale(Math.max(noScale * 0.8, 0.4)); // Shrink No button
+    setYesScale((prev) => Math.min(prev + 0.4, 9)); // Increased to 0.4 and cap to 9
 
-    // Increase Yes button size
-    const newYesSize = yesSize * 1.3;
-    setYesSize(newYesSize);
+    // Logic: After 6 clicks, No button moves to center (0,0) to be covered by Yes
+    if (newCount >= 6) {
+      setNoPosition({ x: 0, y: 0 });
+    } else {
+      // Random position shift for No button
+      const randomX = Math.random() * 240 - 120;
+      const randomY = Math.random() * 240 - 120;
+      setNoPosition({ x: randomX, y: randomY });
+    }
+  };
 
-    // Random position shift for No button (make it "escape")
-    if (newCount < 6) {
-      const randomX = Math.random() * 100 - 50;
-      const randomY = Math.random() * 100 - 50;
+  const handleNoMouseEnter = () => {
+    // Stop running away if we reached the limit (so it stays under the Yes button)
+    if (noCount >= 6) return;
+
+    if (noCount > 0) {
+      // Jump away when mouse gets close
+      const randomX = Math.random() * 300 - 150;
+      const randomY = Math.random() * 300 - 150;
       setNoPosition({ x: randomX, y: randomY });
     }
   };
@@ -55,59 +66,67 @@ export default function InteractiveButtons({
   };
 
   // Calculate opacity for No button (fade out after many clicks)
-  const noOpacity = noCount > 4 ? Math.max(1 - (noCount - 4) * 0.2, 0.1) : 1;
+  // We keep it visible but it will be behind the Yes button
+  const noOpacity = 1;
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-12 w-full pt-4">
       {/* Question Display - only shown after first No click */}
-      {noCount > 0 && (
-        <p className="text-2xl md:text-3xl text-white/90 text-center animate-scale-in">
-          {questionText}
-        </p>
-      )}
+      <div className="min-h-[60px] flex items-center justify-center">
+        {noCount > 0 && (
+          <p className="text-fluid-h2 text-white/95 text-center animate-scale-in px-6 font-semibold drop-shadow-sm">
+            {questionText}
+          </p>
+        )}
+      </div>
 
       {/* Buttons Container */}
-      <div className="relative flex gap-6 items-center justify-center flex-wrap min-h-[200px]">
+      <div className="relative flex flex-col sm:flex-row gap-8 items-center justify-center min-h-[250px] w-full max-w-md mx-auto">
         {/* Yes Button */}
-        <button
-          onClick={handleYesClick}
+        <div
+          className="relative z-20"
           style={{
-            width: `${yesSize}px`,
-            height: `${yesSize}px`,
+            transform: `scale(${yesScale})`,
+            transition: "transform 0.3s ease-in-out",
           }}
-          className="bg-gradient-to-r from-valentine-pink to-valentine-red text-white 
-                   font-bold rounded-full shadow-lg hover:shadow-2xl 
-                   hover:scale-110 active:scale-95 transition-all duration-500 
-                   flex items-center justify-center z-10"
         >
-          <span className="text-lg md:text-xl">Yes! 💖</span>
-        </button>
+          <button
+            onClick={handleYesClick}
+            className="bg-gradient-to-r from-valentine-pink to-valentine-red text-white 
+                   font-bold rounded-full shadow-xl hover:shadow-2xl 
+                   active:scale-95 transition-all duration-200 
+                   flex items-center justify-center animate-heartbeat
+                   px-10 py-5 text-xl"
+          >
+            <span>Yes! 💖</span>
+          </button>
+        </div>
 
         {/* No Button */}
         <button
           onClick={handleNoClick}
+          onMouseEnter={handleNoMouseEnter}
           style={{
-            width: `${noSize}px`,
-            height: `${noSize}px`,
+            transform: `translate(${noPosition.x}px, ${noPosition.y}px) scale(${noScale})`,
             opacity: noOpacity,
-            transform: `translate(${noPosition.x}px, ${noPosition.y}px)`,
+            position: noCount > 0 ? "absolute" : "relative",
           }}
-          className={`bg-gray-500/50 text-white font-medium rounded-full shadow-md 
-                   hover:bg-gray-600/50 transition-all duration-500 
-                   flex items-center justify-center ${
-                     noCount > 5 ? "pointer-events-none" : ""
-                   }`}
+          className="bg-white/20 backdrop-blur-md text-white/90 font-semibold rounded-full border border-white/30
+                   shadow-lg hover:bg-white/30 transition-all duration-500 
+                   flex items-center justify-center z-10 px-8 py-4 text-lg select-none"
         >
-          <span style={{ fontSize: `${Math.max(noSize / 8, 10)}px` }}>No</span>
+          <span>No</span>
         </button>
       </div>
 
       {/* Helper Text */}
-      {noCount > 3 && (
-        <p className="text-white/60 text-sm text-center animate-scale-in">
-          The No button is getting harder to click... 🤔
-        </p>
-      )}
+      <div className="min-h-[30px]">
+        {noCount > 3 && (
+          <p className="text-white/50 text-sm text-center animate-scale-in italic tracking-wide">
+            The &quot;No&quot; button is a bit shy... 🏃‍♂️
+          </p>
+        )}
+      </div>
     </div>
   );
 }

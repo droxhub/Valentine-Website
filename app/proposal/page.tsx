@@ -16,18 +16,18 @@ function ProposalContent() {
       <div className="max-w-2xl w-full">
         {/* Proposal Card */}
         <div
-          className={`glass-morphism rounded-3xl p-8 md:p-12 shadow-2xl transition-all duration-500 ${
+          className={`glass-morphism rounded-3xl p-6 md:p-10 shadow-2xl transition-all duration-500 ${
             isAccepted ? "blur-sm scale-95" : ""
           }`}
         >
-          <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl romantic-text text-white text-shadow-glow mb-4">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl romantic-text text-white text-shadow-glow mb-3">
               Hey {toName},
             </h1>
-            <h2 className="text-3xl md:text-4xl romantic-text text-white/90 mb-2">
+            <h2 className="text-2xl md:text-3xl romantic-text text-white/90 mb-2">
               Will you be my Valentine? 💕
             </h2>
-            <p className="text-lg text-white/60 mt-6">From: {fromName}</p>
+            <p className="text-base text-white/60 mt-4">From: {fromName}</p>
           </div>
 
           {/* Interactive Buttons */}
