@@ -32,13 +32,13 @@ export default function CreateLinkForm() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 md:space-y-6">
       {/* Name Inputs */}
-      <div className="space-y-4">
+      <div className="space-y-4 md:space-y-5">
         <div>
           <label
             htmlFor="fromName"
-            className="block text-white text-sm font-medium mb-2"
+            className="block text-white text-fluid-xs font-semibold mb-2 tracking-wide"
           >
             Your Name
           </label>
@@ -48,16 +48,19 @@ export default function CreateLinkForm() {
             value={fromName}
             onChange={(e) => setFromName(e.target.value)}
             placeholder="e.g., Alex"
-            className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 
-                     text-white placeholder-white/50 focus:outline-none focus:ring-2 
-                     focus:ring-valentine-pink focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl 
+                     bg-white/15 border-2 border-white/25 
+                     text-white text-fluid-sm placeholder-white/40 
+                     focus:outline-none focus:bg-white/20 focus:border-white/40
+                     input-premium
+                     transition-all duration-300"
           />
         </div>
 
         <div>
           <label
             htmlFor="toName"
-            className="block text-white text-sm font-medium mb-2"
+            className="block text-white text-fluid-xs font-semibold mb-2 tracking-wide"
           >
             Your Crush&apos;s Name
           </label>
@@ -67,9 +70,12 @@ export default function CreateLinkForm() {
             value={toName}
             onChange={(e) => setToName(e.target.value)}
             placeholder="e.g., Sarah"
-            className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 
-                     text-white placeholder-white/50 focus:outline-none focus:ring-2 
-                     focus:ring-valentine-pink focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl 
+                     bg-white/15 border-2 border-white/25 
+                     text-white text-fluid-sm placeholder-white/40 
+                     focus:outline-none focus:bg-white/20 focus:border-white/40
+                     input-premium
+                     transition-all duration-300"
           />
         </div>
       </div>
@@ -77,42 +83,52 @@ export default function CreateLinkForm() {
       {/* Generate Button */}
       <button
         onClick={handleGenerate}
-        className="w-full py-4 px-6 bg-gradient-to-r from-valentine-pink to-valentine-red 
-                 text-white text-lg font-semibold rounded-xl shadow-lg 
-                 hover:shadow-xl hover:scale-105 active:scale-95 
-                 transition-all duration-300 animate-heartbeat"
+        className="w-full py-3.5 md:py-4 px-6 
+                 bg-gradient-to-r from-valentine-pink via-valentine-purple to-valentine-red 
+                 text-white text-fluid-base font-bold rounded-xl 
+                 shadow-lg hover:shadow-xl 
+                 btn-premium animate-heartbeat
+                 transform hover:scale-[1.01] active:scale-95 
+                 transition-all duration-300"
       >
-        Generate Proposal Link 💌
+        <span className="relative z-10 flex items-center justify-center gap-2">
+          Generate Proposal Link 💌
+        </span>
       </button>
 
       {/* Generated Link Section */}
       {generatedLink && (
-        <div className="mt-6 p-4 bg-white/10 rounded-xl border border-white/20 animate-scale-in space-y-4">
+        <div className="mt-5 md:mt-6 p-4 md:p-5 bg-white/10 rounded-xl border-2 border-white/20 animate-scale-in space-y-4 shadow-xl backdrop-blur-sm">
           <div>
-            <p className="text-white/80 text-sm mb-2">
-              Your magical link is ready!
+            <p className="text-white/85 text-fluid-xs font-medium mb-3 flex items-center gap-2">
+              <span className="text-xl">✨</span>
+              <span>Your magical link is ready!</span>
             </p>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2.5">
               <input
                 type="text"
                 value={generatedLink}
                 readOnly
-                className="flex-1 px-3 py-2 bg-white/20 border border-white/30 rounded-lg 
-                         text-white text-sm focus:outline-none"
+                className="flex-1 px-3 py-2.5 bg-white/20 border border-white/30 
+                         rounded-lg text-white text-xs sm:text-sm 
+                         focus:outline-none select-all backdrop-blur-sm"
               />
               <button
                 onClick={handleCopy}
-                className={`px-6 py-2 rounded-lg font-medium transition-all ${
-                  copied
-                    ? "bg-green-500 text-white"
-                    : "bg-white text-valentine-pink hover:bg-white/90"
-                }`}
+                className={`px-5 md:px-6 py-2.5 rounded-lg font-semibold 
+                          text-fluid-xs transition-all duration-300 
+                          transform hover:scale-105 active:scale-95 shadow-md ${
+                            copied
+                              ? "bg-green-500 text-white"
+                              : "bg-white text-valentine-pink hover:bg-white/90"
+                          }`}
               >
                 {copied ? "✓ Copied!" : "Copy"}
               </button>
             </div>
           </div>
 
+          {/* WhatsApp Share Button */}
           <button
             onClick={() => {
               const text = `Hey! I have a special message for you... Check it out here: ${generatedLink}`;
@@ -121,13 +137,20 @@ export default function CreateLinkForm() {
                 "_blank",
               );
             }}
-            className="w-full py-4 px-6 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-bold text-lg rounded-full shadow-lg 
-                     hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all duration-300 
-                     flex items-center justify-center gap-3 group border border-white/20"
+            className="w-full py-3 md:py-3.5 px-5 
+                     bg-gradient-to-r from-[#25D366] to-[#128C7E] 
+                     text-white font-bold text-fluid-sm rounded-full 
+                     shadow-lg hover:shadow-xl 
+                     transform hover:scale-[1.01] active:scale-95 
+                     transition-all duration-300 
+                     flex items-center justify-center gap-2.5 
+                     group border-2 border-white/20"
           >
-            <span className="drop-shadow-sm">Share on WhatsApp</span>
+            <span className="drop-shadow-sm relative z-10">
+              Share on WhatsApp
+            </span>
             <svg
-              className="w-6 h-6 fill-white drop-shadow-sm transition-transform group-hover:rotate-12"
+              className="w-4 h-4 md:w-5 md:h-5 fill-white drop-shadow-sm transition-transform group-hover:rotate-12 relative z-10"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
