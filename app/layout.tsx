@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description:
     "Create a magical Valentine's Day proposal moment with a personalized link for your special someone!",
   keywords: ["valentine", "proposal", "love", "romantic", "valentine's day"],
+  icons: {
+    icon: "/fevi-ico.png",
+  },
 };
 
 export default function RootLayout({
