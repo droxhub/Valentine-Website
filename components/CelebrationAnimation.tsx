@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 interface CelebrationAnimationProps {
   fromName: string;
   toName: string;
+  title?: string;
 }
 
 export default function CelebrationAnimation({
   fromName,
   toName,
+  title = "YES! 💖",
 }: CelebrationAnimationProps) {
   const [showNames, setShowNames] = useState(false);
 
@@ -80,7 +82,7 @@ export default function CelebrationAnimation({
           <div className="space-y-8 animate-scale-in">
             {/* Main "YES" Message */}
             <h1 className="text-6xl md:text-8xl font-bold romantic-text drop-shadow-sm tracking-wide">
-              YES! 💖
+              {title}
             </h1>
 
             {/* Cat Kissing GIF */}
