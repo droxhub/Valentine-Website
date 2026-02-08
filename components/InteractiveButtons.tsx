@@ -25,6 +25,23 @@ export default function InteractiveButtons({
     "Just say yes! 😊",
   ];
 
+  // Helper to get safe random position away from center (Yes button)
+  const getSafePosition = (scale: number) => {
+    // Current Yes button size estimation (base width ~120px * scale)
+    const secureRadius = 80 + scale * 30; // Safe distance from center
+
+    // Generate random angle
+    const angle = Math.random() * 2 * Math.PI;
+
+    // Generate random distance (minimum secureRadius, max 200px)
+    const distance = secureRadius + Math.random() * 100;
+
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    return { x, y };
+  };
+
   const handleNoClick = () => {
     const newCount = noCount + 1;
     setNoCount(newCount);
@@ -42,10 +59,8 @@ export default function InteractiveButtons({
     if (newCount >= 6) {
       setNoPosition({ x: 0, y: 0 });
     } else {
-      // Random position shift for No button
-      const randomX = Math.random() * 240 - 120;
-      const randomY = Math.random() * 240 - 120;
-      setNoPosition({ x: randomX, y: randomY });
+      // Get safe position away from growing Yes button
+      setNoPosition(getSafePosition(yesScale));
     }
   };
 
@@ -55,9 +70,7 @@ export default function InteractiveButtons({
 
     if (noCount > 0) {
       // Jump away when mouse gets close
-      const randomX = Math.random() * 300 - 150;
-      const randomY = Math.random() * 300 - 150;
-      setNoPosition({ x: randomX, y: randomY });
+      setNoPosition(getSafePosition(yesScale));
     }
   };
 
@@ -74,7 +87,7 @@ export default function InteractiveButtons({
       {/* Question Display - only shown after first No click */}
       <div className="min-h-[40px] sm:min-h-[60px] md:min-h-[70px] flex items-center justify-center">
         {noCount > 0 && (
-          <p className="text-fluid-h2 text-white/95 text-center animate-scale-in px-4 sm:px-6 font-semibold drop-shadow-lg leading-tight">
+          <p className="text-3xl md:text-5xl text-valentine-primary text-center animate-scale-in px-4 sm:px-6 font-bold romantic-text leading-tight">
             {questionText}
           </p>
         )}
@@ -92,15 +105,15 @@ export default function InteractiveButtons({
         >
           <button
             onClick={handleYesClick}
-            className="bg-gradient-to-r from-valentine-pink via-valentine-purple to-valentine-red text-white 
-                   font-bold rounded-full shadow-xl hover:shadow-2xl 
+            className="bg-valentine-primary text-white 
+                   font-bold rounded-full 
                    active:scale-95 transition-all duration-200 
-                   flex items-center justify-center animate-heartbeat btn-premium
-                   px-7 sm:px-9 md:px-10 py-3.5 sm:py-4 md:py-5 
+                   flex items-center justify-center btn-premium
+                   px-8 sm:px10 md:px-12 py-3.5 sm:py-4 md:py-5 
                    text-base sm:text-lg md:text-xl
                    min-w-[110px] sm:min-w-[130px]"
           >
-            <span className="relative z-10">Yes! 💖</span>
+            Yes! 💖
           </button>
         </div>
 
@@ -113,14 +126,14 @@ export default function InteractiveButtons({
             opacity: noOpacity,
             position: noCount > 0 ? "absolute" : "relative",
           }}
-          className="bg-white/20 backdrop-blur-md text-white/90 font-semibold rounded-full border-2 border-white/30
-                   shadow-lg hover:bg-white/30 transition-all duration-500 
+          className="bg-gray-200 text-valentine-text-dark font-semibold rounded-full
+                   hover:bg-gray-300 transition-all duration-300 
                    flex items-center justify-center z-10 
                    px-6 sm:px-7 md:px-9 py-3 sm:py-3.5 md:py-4 
                    text-sm sm:text-base md:text-lg select-none
                    min-w-[90px] sm:min-w-[110px]"
         >
-          <span>No</span>
+          No
         </button>
       </div>
 

@@ -32,7 +32,7 @@ export default function CelebrationAnimation({
   const confetti = Array.from({ length: 100 }, (_, i) => ({
     id: i,
     left: `${Math.random() * 100}%`,
-    backgroundColor: ["#FF69B4", "#FF1744", "#E91E63", "#FFD700", "#FF6B9D"][
+    backgroundColor: ["#FF1493", "#FF69B4", "#FFB6C1", "#FFD700", "#FF4D6D"][
       Math.floor(Math.random() * 5)
     ],
     animationDuration: `${3 + Math.random() * 2}s`,
@@ -40,15 +40,15 @@ export default function CelebrationAnimation({
   }));
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/80 backdrop-blur-xl">
       {/* Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/40 to-pink-900/40 animate-pulse" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-pink-200/40 to-rose-200/40 animate-pulse" />
 
       {/* Falling Hearts */}
       {hearts.map((heart) => (
         <div
           key={`heart-${heart.id}`}
-          className="absolute top-0 animate-fall"
+          className="absolute top-0 animate-fall text-valentine-primary/60"
           style={{
             left: heart.left,
             animationDuration: heart.animationDuration,
@@ -79,25 +79,34 @@ export default function CelebrationAnimation({
         {showNames && (
           <div className="space-y-8 animate-scale-in">
             {/* Main "YES" Message */}
-            <h1 className="text-6xl md:text-8xl font-bold text-white drop-shadow-[0_0_25px_rgba(255,105,180,0.8)] tracking-wide">
+            <h1 className="text-6xl md:text-8xl font-bold text-valentine-primary drop-shadow-sm tracking-wide">
               YES! 💖
             </h1>
 
+            {/* Cat Kissing GIF */}
+            <div className="flex justify-center my-6 animate-scale-in animation-delay-300">
+              <img
+                src="https://media.giphy.com/media/KmxmoHUGPDjfQXqGgv/giphy.gif"
+                alt="Cats Kissing"
+                className="w-48 h-48 md:w-64 md:h-64 rounded-3xl shadow-xl border-4 border-white object-cover"
+              />
+            </div>
+
             {/* Names Section */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 py-6">
-              <h2 className="text-4xl md:text-6xl romantic-text text-white/95 text-shadow-glow">
+              <h2 className="text-4xl md:text-6xl romantic-text text-valentine-text-dark">
                 {fromName}
               </h2>
-              <span className="text-3xl md:text-4xl text-white/80 font-light italic px-4 border-b border-white/30 pb-1">
-                &
+              <span className="text-3xl md:text-4xl text-valentine-primary/80 font-light italic px-4 border-b border-pink-200 pb-1">
+                &amp;
               </span>
-              <h2 className="text-4xl md:text-6xl romantic-text text-white/95 text-shadow-glow">
+              <h2 className="text-4xl md:text-6xl romantic-text text-valentine-text-dark">
                 {toName}
               </h2>
             </div>
 
             {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-white/90 font-light tracking-[0.2em] uppercase mt-8">
+            <p className="text-xl md:text-2xl text-valentine-text-light font-light tracking-[0.2em] uppercase mt-8">
               Happy Valentine&apos;s Day
             </p>
 
@@ -115,7 +124,7 @@ export default function CelebrationAnimation({
                     "_blank",
                   );
                 }}
-                className="px-8 py-4 bg-white text-valentine-red font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center gap-3 mx-auto group"
+                className="px-8 py-4 bg-valentine-primary text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center gap-3 mx-auto group btn-premium"
               >
                 <span>Send My Response 💌</span>
                 <svg
