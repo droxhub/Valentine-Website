@@ -27,21 +27,15 @@ body {
   background: linear-gradient(135deg, #ffb3c6 0%, #ffc9d6 100%);
   min-height: 100vh;
   font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
+    var(--font-fredoka), "Comic Sans MS", "Comic Sans", cursive, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
 .romantic-text {
-  font-family: "Dancing Script", "Great Vibes", cursive;
+  font-family: var(--font-dancing-script), "Great Vibes", cursive;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--valentine-text-dark);

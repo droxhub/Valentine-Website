@@ -2,7 +2,7 @@ import CreateLinkForm from "@/components/CreateLinkForm";
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen flex items-center justify-center px-4 py-8 md:py-12">
+    <main className="relative flex-1 flex items-center justify-center px-4 py-8 md:py-12">
       <div className="relative z-10 max-w-md w-full">
         {/* Hero Section */}
         <div className="text-center mb-6 md:mb-8">

@@ -1,5 +1,18 @@
 import type { Metadata } from "next";
+import { Fredoka, Dancing_Script } from "next/font/google";
 import "./globals.css";
+
+const fredoka = Fredoka({
+  subsets: ["latin"],
+  variable: "--font-fredoka",
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  variable: "--font-dancing-script",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Valentine Proposal 💕 | Will You Be Mine?",
@@ -16,23 +29,29 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-        <a
-          href="https://www.droxdev.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[9999] flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity duration-300 pointer-events-auto cursor-pointer"
-        >
-          <span className="text-white/80 text-[10px] uppercase tracking-widest font-light drop-shadow-md">
-            Powered by
-          </span>
-          <img
-            src="/drox-logo.png"
-            alt="Drox Logo"
-            className="h-8 w-auto drop-shadow-md"
-          />
-        </a>
+      <body
+        className={`${fredoka.variable} ${dancingScript.variable} font-fredoka flex flex-col min-h-screen`}
+      >
+        <div className="flex-1 flex flex-col">{children}</div>
+        <div className="flex justify-center py-4 pointer-events-none relative z-30">
+          <a
+            href="https://www.droxdev.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 
+                       bg-black/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-black/10 shadow-lg
+                       opacity-90 hover:opacity-100 transition-all duration-300 pointer-events-auto cursor-pointer hover:scale-105"
+          >
+            <span className="text-white/95 text-[10px] uppercase tracking-widest font-medium drop-shadow-sm">
+              Powered by
+            </span>
+            <img
+              src="/drox-logo.png"
+              alt="Drox Logo"
+              className="h-6 w-auto drop-shadow-sm"
+            />
+          </a>
+        </div>
       </body>
     </html>
   );

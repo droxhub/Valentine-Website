@@ -79,7 +79,7 @@ export default function CelebrationAnimation({
         {showNames && (
           <div className="space-y-8 animate-scale-in">
             {/* Main "YES" Message */}
-            <h1 className="text-6xl md:text-8xl font-bold text-valentine-primary drop-shadow-sm tracking-wide">
+            <h1 className="text-6xl md:text-8xl font-bold romantic-text drop-shadow-sm tracking-wide">
               YES! 💖
             </h1>
 
